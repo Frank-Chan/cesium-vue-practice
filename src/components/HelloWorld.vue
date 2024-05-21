@@ -1,58 +1,66 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+  <div class="map_wrapper" id="cesiumMapContainer"></div>
 </template>
 
 <script>
+
+import "cesium/Build/Cesium/Widgets/widgets.css";
+import {
+  Cartesian3,
+  createOsmBuildingsAsync,
+  Ion,
+  Math as CesiumMath,
+  Terrain,
+  Viewer,
+} from "cesium";
+
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
-}
+  name: "HelloWorld",
+  data(){
+    return {
+      viewer:null,
+    }
+  },
+  mounted() {
+    this.initMap();
+  },
+  methods: {
+    async initMap() {
+      // Your access token can be found at: https://ion.cesium.com/tokens.
+      // Replace `your_access_token` with your Cesium ion access token.
+      Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4ZGU1OWU0My03NmE5LTQ3YTctOTQ3Zi0zZWY2ODI5MWI5NDUiLCJpZCI6OTY2ODEsImlhdCI6MTY1NDY1NTM1NX0._27bEReanba-t7Hs9M9moV5aUwkmo_aALqol811e82k";
+
+      // 在ID为 `cesiumMapContainer` 的HTML元素中初始化Cesium Viewer
+      this.viewer = new Viewer("cesiumMapContainer", {
+        terrain: Terrain.fromWorldTerrain(),
+      });
+
+      // Fly the camera to San Francisco at the given longitude, latitude, and height.
+      this.viewer.camera.flyTo({
+        destination: Cartesian3.fromDegrees(-122.4175, 37.655, 400),
+        orientation: {
+          heading: CesiumMath.toRadians(0.0),
+          pitch: CesiumMath.toRadians(-15.0),
+        },
+      });
+
+      // Add Cesium OSM Buildings, a global 3D buildings layer.
+      const buildingTileset = await createOsmBuildingsAsync();
+      this.viewer.scene.primitives.add(buildingTileset);
+    },
+  },
+  beforeUnmounted(){
+    //销毁Cesium Viewer
+    if(this.viewer){
+      this.viewer.destroy();
+    }
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.map_wrapper {
+  height: 100%;
 }
 </style>
