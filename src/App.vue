@@ -5,19 +5,20 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from "./components/HelloWorld.vue"; //引入包含初始化Cesium.Viewer的组件
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    HelloWorld,
+  },
+};
 </script>
 
 <style>
+/* 地图容器的样式不可少 */
 #wrapper {
-  width:100%;
+  width: 100%;
   height: 100vh;
 }
 </style>
