@@ -37,7 +37,8 @@ export default {
 
       //相机飞至指定位置
       this.viewer.camera.flyTo({
-        destination: Cartesian3.fromDegrees(114.1, 22.45, 2000),
+        // destination: Cartesian3.fromDegrees(114.1, 22.45, 2000),//深圳
+        destination: Cartesian3.fromDegrees(-73.98566, 40.76141, 2000), //纽约曼哈顿
         orientation: {
           heading: CesiumMath.toRadians(0.0),
           pitch: CesiumMath.toRadians(-15.0),

@@ -1,5 +1,4 @@
 const { defineConfig } = require("@vue/cli-service");
-// const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
 module.exports = defineConfig({
@@ -7,7 +6,6 @@ module.exports = defineConfig({
   lintOnSave: true,
   configureWebpack: {
     plugins: [
-      // new NodePolyfillPlugin(),
       new CopyWebpackPlugin({
         patterns: [
           {
