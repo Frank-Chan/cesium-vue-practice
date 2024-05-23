@@ -31,4 +31,7 @@ module.exports = defineConfig({
       }),
     ],
   },
+  
+  //注意：本地部署打包前需要注释掉publicPath参数
+  // publicPath: "/cesium-vue-practice/", //配置为github仓库名,否则部署到GitHub Pages上后会获取不到页面内容。
 });
