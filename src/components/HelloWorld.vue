@@ -6,7 +6,8 @@
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import {
   Cartesian3,
-  createOsmBuildingsAsync,
+  // createOsmBuildingsAsync,
+  createGooglePhotorealistic3DTileset,
   Ion,
   Math as CesiumMath,
   Terrain,
@@ -38,7 +39,7 @@ export default {
       //相机飞至指定位置
       this.viewer.camera.flyTo({
         // destination: Cartesian3.fromDegrees(114.1, 22.45, 2000),//深圳
-        destination: Cartesian3.fromDegrees(-73.98566, 40.76141, 2000), //纽约曼哈顿
+        destination: Cartesian3.fromDegrees(-73.98566, 40.663, 2000), //纽约曼哈顿
         orientation: {
           heading: CesiumMath.toRadians(0.0),
           pitch: CesiumMath.toRadians(-15.0),
@@ -46,7 +47,9 @@ export default {
       });
 
       // 添加OSM建筑图层
-      const buildingTileset = await createOsmBuildingsAsync();
+      // const buildingTileset = await createOsmBuildingsAsync();
+      const buildingTileset = await createGooglePhotorealistic3DTileset();
+      buildingTileset.maximumScreenSpaceError = 8;
       this.viewer.scene.primitives.add(buildingTileset);
     },
   },
