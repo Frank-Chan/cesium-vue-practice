@@ -6,8 +6,8 @@
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import {
   Cartesian3,
-  // createOsmBuildingsAsync,
-  createGooglePhotorealistic3DTileset,
+  createOsmBuildingsAsync,
+  // createGooglePhotorealistic3DTileset,
   Ion,
   Math as CesiumMath,
   Terrain,
@@ -47,8 +47,8 @@ export default {
       });
 
       // 添加OSM建筑图层
-      // const buildingTileset = await createOsmBuildingsAsync();
-      const buildingTileset = await createGooglePhotorealistic3DTileset();
+      const buildingTileset = await createOsmBuildingsAsync();
+      // const buildingTileset = await createGooglePhotorealistic3DTileset();
       buildingTileset.maximumScreenSpaceError = 8;
       this.viewer.scene.primitives.add(buildingTileset);
     },
