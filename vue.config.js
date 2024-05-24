@@ -3,6 +3,9 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
 module.exports = defineConfig({
   transpileDependencies: true,
+  devServer: {
+    port: 8090, //指定研发的端口号
+  },
   lintOnSave: true,
   configureWebpack: {
     plugins: [
