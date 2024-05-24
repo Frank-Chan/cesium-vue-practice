@@ -34,7 +34,19 @@ export default {
       // 在ID为 `cesiumMapContainer` 的HTML元素中初始化Cesium Viewer
       this.viewer = new Viewer("cesiumMapContainer", {
         terrain: Terrain.fromWorldTerrain(),
+        //#region  Cesium Widgets
+        geocoder: false,  //搜索工具
+        sceneModePicker: false, //视图模式切换工具
+        homeButton: false,  //首页位置工具
+        baseLayerPicker: false, //基础底图切换工具
+        navigationHelpButton: false, //导航帮助工具
+        animation:false, //动画工具
+        timeline:false, //时间轴工具
+        fullscreenButton:false, //全屏按钮工具
+        //#endregion
       });
+      this.viewer.cesiumWidget.creditContainer.style= "display:none;";//去除左下角Cesium水印信息
+      window.viewer =this.viewer;
 
       //相机飞至指定位置
       this.viewer.camera.flyTo({
